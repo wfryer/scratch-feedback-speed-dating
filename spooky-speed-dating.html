@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scratch Project Feedback Speed Dating: Spooky Story!</title>
+<link href="https://fonts.googleapis.com/css2?family=Creepster&family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bone: #f3ead3;
+  --bone-dark: #e4d6ae;
+  --bone-deep: #cdb87e;
+  --ink: #241433;
+  --ink-light: #4a2f63;
+  --pumpkin: #ff7518;
+  --pumpkin-dark: #cc5500;
+  --witch: #7b2cbf;
+  --witch-light: #9d4edd;
+  --slime: #7cb518;
+  --slime-light: #9ed13e;
+  --shadow: rgba(20, 8, 32, 0.45);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background-color: #150a22;
+  background-image:
+    radial-gradient(ellipse at 15% 20%, rgba(123,44,191,0.25) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 15%, rgba(255,117,24,0.12) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 90%, rgba(124,181,24,0.1) 0%, transparent 60%);
+  font-family: 'Baloo 2', 'Comic Sans MS', sans-serif;
+  color: var(--bone);
+  min-height: 100vh;
+  padding: 16px;
+}
+.hidden { display: none !important; }
+.screen { display: none; max-width: 1280px; margin: 0 auto; }
+.screen.active { display: block; }
+
+h1.page-title {
+  font-family: 'Creepster', cursive;
+  font-size: clamp(2rem, 5vw, 3.3rem);
+  color: var(--pumpkin);
+  text-shadow: 0 0 18px rgba(255,117,24,0.55), 3px 3px 0 var(--ink);
+  letter-spacing: 2px;
+  text-align: center;
+  margin: 18px 0 6px;
+}
+p.page-sub { text-align: center; color: var(--bone-dark); font-weight: 600; margin-bottom: 18px; }
+
+.card {
+  background: var(--bone);
+  color: var(--ink);
+  border: 3px solid var(--bone-deep);
+  border-radius: 14px;
+  box-shadow: inset 0 0 30px rgba(205,184,126,0.25), 0 8px 32px var(--shadow);
+  padding: 18px 20px;
+}
+.card h2 { font-family: 'Creepster', cursive; letter-spacing: 1.5px; color: var(--witch); font-size: 1.5rem; margin-bottom: 8px; }
+.card-dark {
+  background: rgba(36,20,51,0.75);
+  border: 2px solid rgba(157,78,221,0.45);
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 8px 28px var(--shadow);
+}
+
+button { font-family: 'Baloo 2', sans-serif; cursor: pointer; }
+button:disabled { opacity: 0.45; cursor: not-allowed; }
+.btn {
+  font-weight: 700; font-size: 1.05rem; letter-spacing: 0.5px;
+  background: linear-gradient(135deg, var(--pumpkin-dark), var(--pumpkin) 50%, var(--pumpkin-dark));
+  color: var(--ink); border: 2px solid var(--ink); border-radius: 10px; padding: 10px 24px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.25);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.btn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(255,117,24,0.45); }
+.btn.purple { background: linear-gradient(135deg, #4a1570, var(--witch) 50%, #4a1570); color: var(--bone); }
+.btn.green { background: linear-gradient(135deg, #5c8a0f, var(--slime) 50%, #5c8a0f); }
+.btn.small { font-size: 0.9rem; padding: 6px 14px; }
+.btn-huge {
+  font-family: 'Creepster', cursive; font-size: clamp(1.5rem, 3vw, 2.2rem); letter-spacing: 3px;
+  background: linear-gradient(135deg, #4a1570, var(--witch) 40%, var(--witch-light) 60%, #4a1570);
+  color: var(--bone); border: none; border-radius: 12px; padding: 14px 44px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.5), 0 0 0 2px var(--ink), 0 0 0 4px var(--pumpkin);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.btn-huge:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 0 2px var(--ink), 0 0 0 4px var(--pumpkin), 0 0 24px rgba(255,117,24,0.5); }
+.ghost-btn {
+  background: transparent; color: var(--bone-dark); border: 1px solid rgba(243,234,211,0.35);
+  border-radius: 8px; padding: 6px 14px; font-size: 0.95rem; font-weight: 600;
+}
+.ghost-btn:hover:not(:disabled) { color: var(--pumpkin); border-color: var(--pumpkin); }
+
+/* ROSTER SCREEN */
+.roster-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 18px; }
+@media (max-width: 860px) { .roster-grid { grid-template-columns: 1fr; } }
+.card label.field-label { display: block; font-weight: 800; color: var(--ink); margin-bottom: 6px; }
+textarea#rosterText {
+  width: 100%; min-height: 260px; border: 2px solid var(--bone-deep); border-radius: 8px;
+  background: #fffaf0; color: var(--ink); font-family: 'Baloo 2', sans-serif; font-size: 1.05rem; padding: 10px; resize: vertical;
+}
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 14px; }
+.chip {
+  border: 2px solid var(--slime); background: #eaf6d2; color: var(--ink);
+  border-radius: 999px; padding: 4px 14px; font-weight: 700; font-size: 1rem;
+}
+.chip.absent { border-color: #b33; background: #f7dcdc; color: #7a2222; text-decoration: line-through; }
+.guest-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; font-weight: 700; }
+.guest-row input[type=text] {
+  border: 2px solid var(--bone-deep); border-radius: 8px; padding: 4px 10px; font-family: 'Baloo 2', sans-serif; font-size: 1rem; background: #fffaf0; color: var(--ink);
+}
+.plan-note { background: rgba(123,44,191,0.1); border-left: 5px solid var(--witch); border-radius: 6px; padding: 10px 14px; margin: 10px 0 14px; font-weight: 600; line-height: 1.45; }
+.plan-note.warn { background: rgba(255,117,24,0.15); border-left-color: var(--pumpkin-dark); }
+.resume-box { background: rgba(124,181,24,0.2); border: 2px dashed var(--slime); border-radius: 10px; padding: 12px 16px; margin-bottom: 16px; display: flex; gap: 12px; align-items: center; justify-content: space-between; flex-wrap: wrap; font-weight: 700; }
+
+/* SPLASH SCREEN */
+#screen-splash.active { display: flex; align-items: center; justify-content: center; min-height: calc(100vh - 40px); position: relative; overflow: hidden; }
+.floaters { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.floater { position: absolute; bottom: -70px; opacity: 0; animation: floatUp linear infinite; }
+@keyframes floatUp {
+  0% { transform: translateY(0) rotate(-10deg); opacity: 0; }
+  10% { opacity: 0.9; }
+  90% { opacity: 0.9; }
+  100% { transform: translateY(-115vh) rotate(25deg); opacity: 0; }
+}
+.splash-inner { position: relative; text-align: center; max-width: 900px; padding: 20px; }
+.splash-kicker { font-weight: 800; letter-spacing: 3px; color: var(--slime-light); text-transform: uppercase; font-size: 1rem; margin-bottom: 8px; }
+.splash-title {
+  font-family: 'Creepster', cursive; font-size: clamp(2.6rem, 8vw, 6rem); line-height: 1.05; color: var(--pumpkin);
+  text-shadow: 0 0 25px rgba(255,117,24,0.7), 4px 4px 0 var(--ink); letter-spacing: 3px; margin-bottom: 18px;
+  animation: flicker 3.2s infinite;
+}
+@keyframes flicker {
+  0%, 18%, 22%, 62%, 64%, 100% { opacity: 1; text-shadow: 0 0 25px rgba(255,117,24,0.7), 4px 4px 0 var(--ink); }
+  20%, 63% { opacity: 0.72; text-shadow: 0 0 6px rgba(255,117,24,0.3), 4px 4px 0 var(--ink); }
+}
+.splash-sub { font-size: 1.35rem; font-weight: 600; color: var(--bone); margin-bottom: 14px; }
+.splash-facts { display: flex; gap: 12px; justify-content: center; margin-bottom: 26px; flex-wrap: wrap; }
+.splash-facts span { background: rgba(123,44,191,0.4); border: 1px solid var(--witch-light); border-radius: 999px; padding: 4px 16px; font-weight: 700; }
+
+/* ROUND SCREEN */
+.topbar { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; justify-content: space-between; margin-bottom: 12px; }
+.topbar-title { font-family: 'Creepster', cursive; font-size: 1.7rem; color: var(--pumpkin); letter-spacing: 1.5px; }
+.pills { display: flex; gap: 8px; }
+.pill { border: 2px solid var(--witch-light); color: var(--bone-dark); border-radius: 999px; padding: 2px 16px; font-weight: 800; }
+.pill.current { background: var(--pumpkin); color: var(--ink); border-color: var(--ink); box-shadow: 0 0 14px rgba(255,117,24,0.6); }
+.pill.done { background: var(--slime); color: var(--ink); border-color: var(--ink); }
+.topbar-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.roles-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+@media (max-width: 760px) { .roles-strip { grid-template-columns: 1fr; } }
+.role-card { border-radius: 12px; padding: 10px 16px; border: 2px solid; }
+.role-card.sharer { background: rgba(255,117,24,0.15); border-color: var(--pumpkin); }
+.role-card.giver { background: rgba(157,78,221,0.2); border-color: var(--witch-light); }
+.role-name { font-family: 'Creepster', cursive; font-size: 1.5rem; letter-spacing: 1.5px; }
+.role-card.sharer .role-name { color: var(--pumpkin); }
+.role-card.giver .role-name { color: var(--witch-light); }
+.role-desc { font-weight: 600; color: var(--bone); }
+
+.round-grid { display: grid; grid-template-columns: minmax(320px, 1fr) 1.2fr; gap: 14px; align-items: start; }
+@media (max-width: 1000px) { .round-grid { grid-template-columns: 1fr; } }
+.wheel-pair { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 14px; }
+.wheel-box { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.wheel-label { font-family: 'Creepster', cursive; font-size: 1.3rem; letter-spacing: 1.5px; text-align: center; }
+.wheel-label.sharer { color: var(--pumpkin); }
+.wheel-label.giver { color: var(--witch-light); }
+.wheel-wrapper { position: relative; display: inline-block; }
+canvas.wheel { display: block; border-radius: 50%; box-shadow: 0 0 0 4px var(--bone-deep), 0 0 0 7px var(--ink), 0 6px 24px var(--shadow); }
+.pointer {
+  position: absolute; right: -16px; top: 50%; transform: translateY(-50%); width: 0; height: 0;
+  border-top: 12px solid transparent; border-bottom: 12px solid transparent; border-right: 22px solid var(--slime-light);
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.6)); z-index: 5;
+}
+.wheel-result { min-height: 34px; font-weight: 800; font-size: 1.15rem; text-align: center; background: var(--bone); color: var(--ink); border-radius: 8px; padding: 2px 14px; min-width: 120px; }
+.spin-wrap { text-align: center; }
+
+.timer-card { text-align: center; margin-bottom: 12px; }
+.timer-phase { font-weight: 800; font-size: 1.3rem; min-height: 1.8rem; color: var(--slime-light); }
+.timer-digits { font-family: 'Creepster', cursive; font-size: clamp(3.4rem, 8vw, 5.6rem); line-height: 1; color: var(--bone); text-shadow: 0 0 18px rgba(157,78,221,0.7); letter-spacing: 4px; }
+.timer-digits.low { color: var(--pumpkin); text-shadow: 0 0 22px rgba(255,117,24,0.8); }
+.timer-digits.done { color: #ff4d4d; animation: flicker 1.2s infinite; }
+.timer-bar { height: 12px; background: rgba(243,234,211,0.2); border-radius: 999px; overflow: hidden; margin: 8px 0 12px; }
+.timer-bar-fill { height: 100%; width: 100%; background: linear-gradient(90deg, var(--slime), var(--pumpkin)); transition: width 0.25s linear; }
+.timer-buttons { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+.table-card h2 { margin-bottom: 8px; }
+table.match-table { width: 100%; border-collapse: separate; border-spacing: 0 6px; }
+table.match-table th { text-align: left; font-family: 'Creepster', cursive; letter-spacing: 1.5px; font-size: 1.15rem; padding: 2px 12px; }
+table.match-table th.sharer { color: var(--pumpkin-dark); }
+table.match-table th.giver { color: var(--witch); }
+table.match-table td { background: #fffaf0; padding: 6px 12px; font-weight: 800; font-size: 1.25rem; border-top: 2px solid var(--bone-deep); border-bottom: 2px solid var(--bone-deep); }
+table.match-table td:first-child { border-left: 2px solid var(--bone-deep); border-radius: 10px 0 0 10px; width: 44px; color: var(--ink-light); font-size: 1rem; text-align: center; }
+table.match-table td:last-child { border-right: 2px solid var(--bone-deep); border-radius: 0 10px 10px 0; }
+table.match-table tr.featured td { background: #ffe9c9; border-color: var(--pumpkin); }
+table.match-table tr.pop { animation: popIn 0.5s ease both; }
+@keyframes popIn { from { opacity: 0; transform: translateX(-24px) scale(0.96); } to { opacity: 1; transform: none; } }
+.guest-tag { background: var(--slime); color: var(--ink); border-radius: 6px; font-size: 0.7rem; padding: 1px 6px; margin-left: 6px; vertical-align: middle; font-weight: 800; }
+.placeholder { text-align: center; color: var(--ink-light); font-style: italic; padding: 26px 8px; font-weight: 600; font-size: 1.1rem; }
+
+/* SUMMARY SCREEN */
+.tabs { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+.tab { background: transparent; color: var(--bone-dark); border: 2px solid var(--witch-light); border-radius: 8px; padding: 6px 18px; font-weight: 800; font-size: 1rem; }
+.tab.active { background: var(--witch); color: var(--bone); }
+.summary-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; align-items: center; }
+.copy-status { font-weight: 700; color: var(--slime-light); }
+table.summary-table { width: 100%; border-collapse: collapse; font-size: 1rem; }
+table.summary-table th { background: var(--witch); color: var(--bone); padding: 8px 10px; text-align: left; font-weight: 800; }
+table.summary-table td { padding: 7px 10px; border-bottom: 1px solid var(--bone-deep); vertical-align: top; font-weight: 600; }
+table.summary-table tr:nth-child(even) td { background: rgba(205,184,126,0.18); }
+table.summary-table td.name { font-weight: 800; white-space: nowrap; }
+table.summary-table td.num { text-align: center; font-weight: 800; }
+td.cell-sharer { color: #8a3a00; }
+td.cell-giver { color: #4a1570; }
+td.cell-none { color: #999; font-style: italic; }
+.round-block { margin-bottom: 18px; }
+.round-block h3 { font-family: 'Creepster', cursive; color: var(--pumpkin-dark); font-size: 1.4rem; letter-spacing: 1.5px; margin-bottom: 4px; }
+.warn-box { background: rgba(255,117,24,0.18); border: 2px solid var(--pumpkin-dark); border-radius: 8px; padding: 8px 12px; margin-bottom: 12px; font-weight: 700; }
+
+footer { text-align: center; padding: 18px; color: rgba(243,234,211,0.6); font-size: 0.95rem; font-weight: 600; }
+footer a { color: var(--pumpkin); text-decoration: none; border-bottom: 1px dotted var(--pumpkin); }
+footer a:hover { color: var(--slime-light); border-bottom-color: var(--slime-light); }
+
+@media print {
+  body { background: #fff; color: #000; padding: 0; }
+  .topbar-actions, .summary-actions, .tabs, footer, .topbar .pills, #summaryBackBtn { display: none !important; }
+  .card { box-shadow: none; border: 1px solid #999; }
+  table.summary-table th { background: #ddd; color: #000; }
+}
+</style>
+</head>
+<body>
+
+<section id="screen-roster" class="screen active">
+  <h1 class="page-title">🎃 Scratch Project Feedback Speed Dating 👻</h1>
+  <p class="page-sub">Spooky Story edition: set up your class, then let the wheels do the matchmaking!</p>
+
+  <div id="resumeBox" class="resume-box hidden">
+    <span id="resumeText">A saved session was found.</span>
+    <span>
+      <button id="resumeBtn" class="btn small green">▶ Resume it</button>
+      <button id="discardBtn" class="btn small">Discard</button>
+    </span>
+  </div>
+
+  <div class="roster-grid">
+    <div class="card">
+      <label class="field-label" for="rosterText">1. Class list (one first name per line)</label>
+      <textarea id="rosterText" spellcheck="false"></textarea>
+    </div>
+    <div class="card">
+      <label class="field-label">2. Who is here today? (tap a name to mark absent)</label>
+      <div id="presentGrid" class="chips"></div>
+
+      <label class="field-label">3. Even out the count?</label>
+      <div class="guest-row">
+        <label><input type="checkbox" id="guestOn"> Add a guest partner:</label>
+        <input type="text" id="guestName" maxlength="30">
+      </div>
+
+      <div id="planNote" class="plan-note"></div>
+      <button id="buildBtn" class="btn-huge">🕸️ Build the Spooky Schedule</button>
+    </div>
+  </div>
+</section>
+
+<section id="screen-splash" class="screen">
+  <div class="floaters" id="floaters"></div>
+  <div class="splash-inner">
+    <div class="splash-kicker">Scratch Project Feedback Speed Dating</div>
+    <h1 class="splash-title">ARE YOU READY FOR A SPOOKY STORY?</h1>
+    <p class="splash-sub">Open your Spooky Scratch Story and get ready to share!</p>
+    <div class="splash-facts" id="splashFacts"></div>
+    <button id="readyBtn" class="btn-huge">🎃 I'M READY! 🎃</button>
+  </div>
+</section>
+
+<section id="screen-round" class="screen">
+  <div class="topbar">
+    <div class="topbar-title">🎃 Spooky Story Speed Dating</div>
+    <div class="pills" id="roundPills"></div>
+    <div class="topbar-actions">
+      <button id="muteBtn" class="ghost-btn">🔔 Sound on</button>
+      <button id="summaryBtn" class="ghost-btn">📋 Summary</button>
+      <button id="restartBtn" class="ghost-btn">↺ Start over</button>
+    </div>
+  </div>
+
+  <div class="roles-strip" id="rolesStrip"></div>
+
+  <div class="round-grid">
+    <div class="card-dark">
+      <div class="wheel-pair">
+        <div class="wheel-box">
+          <div class="wheel-label sharer" id="sharerLabel"></div>
+          <div class="wheel-wrapper"><canvas id="wheelSharer" class="wheel"></canvas><div class="pointer"></div></div>
+          <div class="wheel-result" id="resSharer">?</div>
+        </div>
+        <div class="wheel-box">
+          <div class="wheel-label giver" id="giverLabel"></div>
+          <div class="wheel-wrapper"><canvas id="wheelGiver" class="wheel"></canvas><div class="pointer"></div></div>
+          <div class="wheel-result" id="resGiver">?</div>
+        </div>
+      </div>
+      <div class="spin-wrap"><button id="spinBtn" class="btn-huge">🎃 SPIN!</button></div>
+    </div>
+
+    <div>
+      <div class="card-dark timer-card">
+        <div class="timer-phase" id="timerPhase">Spin first, then start the timer!</div>
+        <div class="timer-digits" id="timerDigits">2:30</div>
+        <div class="timer-bar"><div class="timer-bar-fill" id="timerBar"></div></div>
+        <div class="timer-buttons">
+          <button id="timerStartBtn" class="btn green" disabled>▶ Start Timer</button>
+          <button id="timerPauseBtn" class="btn" disabled>⏸ Pause</button>
+          <button id="timerResetBtn" class="btn" disabled>↺ Reset</button>
+          <button id="nextBtn" class="btn purple hidden">Next Round ➜</button>
+        </div>
+      </div>
+      <div class="card table-card">
+        <h2 id="tableTitle">Matchups</h2>
+        <div id="matchTable"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="screen-summary" class="screen">
+  <div class="topbar">
+    <div class="topbar-title">📋 Matchup Summary</div>
+    <div class="topbar-actions">
+      <button id="summaryBackBtn" class="ghost-btn">⬅ Back to rounds</button>
+      <button id="summaryRestartBtn" class="ghost-btn">↺ Start over</button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="tabs">
+      <button class="tab active" data-view="student">By student</button>
+      <button class="tab" data-view="round">By round</button>
+    </div>
+    <div class="summary-actions">
+      <button id="copyBtn" class="btn small green">📋 Copy table</button>
+      <button id="csvBtn" class="btn small">⬇ Download CSV</button>
+      <button id="printBtn" class="btn small purple">🖨 Print</button>
+      <span class="copy-status" id="copyStatus"></span>
+    </div>
+    <div id="summaryBody"></div>
+  </div>
+</section>
+
+<footer>Vibe coded by Dr Fryer - <a href="https://github.com/wfryer/" target="_blank" rel="noopener">more projects on GitHub</a> - <a href="https://ai.wesfryer.com" target="_blank" rel="noopener">more AI learning on ai.wesfryer.com</a></footer>
+
+<script>
+/* ================================================================
+   CONFIGURATION: edit these to change the class list, timing, and titles
+================================================================ */
+const CONFIG = {
+  // Replace these with your own class list (you can also edit the list on the setup screen)
+  roster: ["Ava", "Ben", "Caleb", "Chloe", "Daniel", "Emma", "Ethan", "Grace", "Henry", "Isla", "Jack", "Layla", "Mason", "Maya", "Nora", "Priya", "Sam", "Tyler", "Violet", "Wyatt"],
+  absentByDefault: [],
+  guestName: "Teacher",
+  guestOnByDefault: false,
+  rounds: 4,
+  totalSeconds: 150,
+  findPartnerSeconds: 30,
+  bellTolls: 4,
+  sharer: {
+    title: "Sprite Sorcerer",
+    plural: "Sprite Sorcerers",
+    icon: "🧙",
+    desc: "Open your Spooky Story, click the green flag, and share what you built."
+  },
+  giver: {
+    title: "Script Whisperer",
+    plural: "Script Whisperers",
+    icon: "👻",
+    desc: "Play the story, then whisper your favorite part and one suggestion."
+  }
+};
+
+/* SCHEDULER:START */
+function shuffled(arr, rng) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(rng() * (i + 1));
+    const t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+
+function makeRoundGroups(n, meet, rng, strict) {
+  const all = [];
+  for (let i = 0; i < n; i += 1) all.push(i);
+  const used = new Array(n).fill(false);
+  const groups = [];
+  const ok = (a, b) => !strict || meet[a][b] === 0;
+
+  if (n % 2 === 1) {
+    let best = null;
+    let bestScore = Infinity;
+    for (let t = 0; t < 300; t += 1) {
+      const trio = shuffled(all, rng).slice(0, 3);
+      const score = meet[trio[0]][trio[1]] + meet[trio[0]][trio[2]] + meet[trio[1]][trio[2]];
+      if (strict && score > 0) continue;
+      if (score < bestScore) { best = trio; bestScore = score; }
+      if (score === 0) break;
+    }
+    if (!best) return null;
+    best.forEach((i) => { used[i] = true; });
+    groups.push(best);
+  }
+
+  for (const p of shuffled(all, rng)) {
+    if (used[p]) continue;
+    used[p] = true;
+    let cands = all.filter((q) => !used[q] && ok(p, q));
+    if (!cands.length) return null;
+    if (!strict) {
+      const low = Math.min(...cands.map((q) => meet[p][q]));
+      cands = cands.filter((q) => meet[p][q] === low);
+    }
+    const q = cands[Math.floor(rng() * cands.length)];
+    used[q] = true;
+    groups.push([p, q]);
+  }
+  return groups;
+}
+
+function markMeets(meet, groups) {
+  groups.forEach((g) => {
+    for (let x = 0; x < g.length; x += 1) {
+      for (let y = x + 1; y < g.length; y += 1) {
+        meet[g[x]][g[y]] += 1;
+        meet[g[y]][g[x]] += 1;
+      }
+    }
+  });
+}
+
+function assignSharers(n, roundGroups, rng, relax) {
+  const slots = [];
+  roundGroups.forEach((groups, r) => groups.forEach((members, g) => slots.push({ r, g, members })));
+  const total = slots.length;
+  const lo = Math.floor(total / n);
+  const hi = Math.ceil(total / n) + (relax ? 1 : 0);
+  const owned = Array.from({ length: n }, () => []);
+  const owner = new Array(total).fill(-1);
+
+  function augment(s, seen) {
+    for (const p of shuffled(slots[s].members, rng)) {
+      if (seen.has(p)) continue;
+      seen.add(p);
+      if (owned[p].length < hi) { owned[p].push(s); owner[s] = p; return true; }
+      for (let k = 0; k < owned[p].length; k += 1) {
+        const s2 = owned[p][k];
+        owned[p].splice(k, 1);
+        owner[s2] = -1;
+        if (augment(s2, seen)) { owned[p].push(s); owner[s] = p; return true; }
+        owned[p].splice(k, 0, s2);
+        owner[s2] = p;
+      }
+    }
+    return false;
+  }
+
+  const order = shuffled(slots.map((_, i) => i), rng);
+  for (const s of order) {
+    if (!augment(s, new Set())) return null;
+  }
+  if (!relax) {
+    for (let p = 0; p < n; p += 1) if (owned[p].length < lo) return null;
+  }
+  const result = roundGroups.map((groups) => groups.map(() => -1));
+  slots.forEach((slot, i) => { result[slot.r][slot.g] = owner[i]; });
+  return result;
+}
+
+function toRounds(roundGroups, owners) {
+  return roundGroups.map((groups, r) => groups.map((members, g) => ({
+    members: members.slice(),
+    sharer: owners[r][g],
+    givers: members.filter((m) => m !== owners[r][g])
+  })));
+}
+
+function buildSchedule(n, rounds, rng) {
+  const rand = rng || Math.random;
+  for (let attempt = 0; attempt < 4000; attempt += 1) {
+    const meet = Array.from({ length: n }, () => new Array(n).fill(0));
+    const roundGroups = [];
+    let good = true;
+    for (let r = 0; r < rounds; r += 1) {
+      const groups = makeRoundGroups(n, meet, rand, true);
+      if (!groups) { good = false; break; }
+      markMeets(meet, groups);
+      roundGroups.push(groups);
+    }
+    if (!good) continue;
+    for (let tries = 0; tries < 25; tries += 1) {
+      const owners = assignSharers(n, roundGroups, rand, false);
+      if (owners) return { rounds: toRounds(roundGroups, owners), repeats: [] };
+    }
+  }
+
+  let bestPlan = null;
+  let bestRepeats = Infinity;
+  for (let attempt = 0; attempt < 300; attempt += 1) {
+    const meet = Array.from({ length: n }, () => new Array(n).fill(0));
+    const roundGroups = [];
+    let good = true;
+    for (let r = 0; r < rounds; r += 1) {
+      const groups = makeRoundGroups(n, meet, rand, false);
+      if (!groups) { good = false; break; }
+      markMeets(meet, groups);
+      roundGroups.push(groups);
+    }
+    if (!good) continue;
+    let repeatTotal = 0;
+    for (let a = 0; a < n; a += 1) for (let b = a + 1; b < n; b += 1) if (meet[a][b] > 1) repeatTotal += meet[a][b] - 1;
+    if (repeatTotal < bestRepeats) {
+      let owners = null;
+      for (let tries = 0; tries < 15 && !owners; tries += 1) owners = assignSharers(n, roundGroups, rand, false);
+      if (!owners) owners = assignSharers(n, roundGroups, rand, true);
+      if (owners) {
+        bestRepeats = repeatTotal;
+        const repeats = [];
+        for (let a = 0; a < n; a += 1) for (let b = a + 1; b < n; b += 1) if (meet[a][b] > 1) repeats.push([a, b, meet[a][b]]);
+        bestPlan = { rounds: toRounds(roundGroups, owners), repeats };
+      }
+    }
+  }
+  return bestPlan;
+}
+/* SCHEDULER:END */
+
+/* ================================================================
+   APP STATE
+================================================================ */
+const $ = (id) => document.getElementById(id);
+const STORAGE_KEY = 'spookySpeedDating.v1';
+
+const state = {
+  participants: [],
+  guestIdx: -1,
+  schedule: null,
+  repeats: [],
+  currentRound: 0,
+  revealed: [],
+  featured: [],
+  wheelOrder: [],
+  savedAt: 0
+};
+
+const absent = new Set(CONFIG.absentByDefault);
+let spinning = false;
+let muted = false;
+let audioCtx = null;
+let masterGain = null;
+
+function esc(s) {
+  return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+function nameOf(i) { return state.participants[i]; }
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach((s) => s.classList.remove('active'));
+  $('screen-' + name).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+/* ================================================================
+   SAVE / RESUME
+================================================================ */
+function saveState() {
+  try {
+    state.savedAt = Date.now();
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (e) { /* storage may be unavailable, that is fine */ }
+}
+function loadSaved() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    const s = JSON.parse(raw);
+    if (!s || !s.schedule || !s.participants || !s.participants.length) return null;
+    return s;
+  } catch (e) { return null; }
+}
+function clearSaved() {
+  try { localStorage.removeItem(STORAGE_KEY); } catch (e) { /* ignore */ }
+}
+
+/* ================================================================
+   ROSTER SCREEN
+================================================================ */
+function parseRoster() {
+  const seen = new Set();
+  const out = [];
+  $('rosterText').value.split(/\r?\n/).forEach((line) => {
+    const nm = line.trim();
+    if (nm && !seen.has(nm)) { seen.add(nm); out.push(nm); }
+  });
+  return out;
+}
+
+function currentParticipantNames() {
+  const names = parseRoster().filter((n) => !absent.has(n));
+  if ($('guestOn').checked) {
+    let g = $('guestName').value.trim() || 'Guest';
+    if (names.includes(g)) g += ' (guest)';
+    names.push(g);
+  }
+  return names;
+}
+
+function renderPresentGrid() {
+  const grid = $('presentGrid');
+  grid.innerHTML = '';
+  parseRoster().forEach((nm) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'chip' + (absent.has(nm) ? ' absent' : '');
+    b.textContent = (absent.has(nm) ? '🤒 ' : '✅ ') + nm;
+    b.addEventListener('click', () => {
+      if (absent.has(nm)) absent.delete(nm); else absent.add(nm);
+      renderPresentGrid();
+      updatePlan();
+    });
+    grid.appendChild(b);
+  });
+}
+
+function updatePlan() {
+  const names = currentParticipantNames();
+  const n = names.length;
+  const rounds = CONFIG.rounds;
+  const note = $('planNote');
+  note.classList.remove('warn');
+  const btn = $('buildBtn');
+  if (n < 4) {
+    note.classList.add('warn');
+    note.textContent = 'Only ' + n + ' participant(s). You need at least 4 for speed dating.';
+    btn.disabled = true;
+    return;
+  }
+  btn.disabled = false;
+  const groups = Math.floor(n / 2);
+  const slots = groups * rounds;
+  const guestOn = $('guestOn').checked;
+  let msg = '';
+  if (n % 2 === 0) {
+    const per = slots / n;
+    msg = n + ' participants: ' + groups + ' pairs each round. Everyone gets to be the ' + CONFIG.sharer.title + ' exactly ' + (Number.isInteger(per) ? per : 'about ' + per.toFixed(1)) + ' times.';
+  } else {
+    const lo = Math.floor(slots / n);
+    const hi = Math.ceil(slots / n);
+    const extra = slots - lo * n;
+    note.classList.add('warn');
+    msg = n + ' participants is an odd number, so each round has one group of three (1 ' + CONFIG.sharer.title + ' and 2 ' + CONFIG.giver.plural + '). That gives ' + slots + ' sharing slots, so ' + (hi === lo ? '' : extra + ' people will be a ' + CONFIG.sharer.title + ' ' + hi + ' times and the rest ' + lo + ' times') + '. Turn on a guest partner to even it out.';
+  }
+  if (rounds > n - 1) {
+    note.classList.add('warn');
+    msg += ' Warning: with ' + n + ' people, some partners must repeat.';
+  }
+  if (guestOn) msg += ' Your guest shares a project twice too, so have one ready!';
+  note.textContent = msg;
+}
+
+function initRoster() {
+  $('rosterText').value = CONFIG.roster.join('\n');
+  $('guestName').value = CONFIG.guestName;
+  $('guestOn').checked = CONFIG.guestOnByDefault;
+  renderPresentGrid();
+  updatePlan();
+  $('rosterText').addEventListener('input', () => { renderPresentGrid(); updatePlan(); });
+  $('guestOn').addEventListener('change', updatePlan);
+  $('guestName').addEventListener('input', updatePlan);
+  $('buildBtn').addEventListener('click', onBuild);
+
+  const saved = loadSaved();
+  if (saved) {
+    const when = new Date(saved.savedAt).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+    $('resumeText').textContent = 'A saved session from ' + when + ' was found (Round ' + (saved.currentRound + 1) + ' of ' + CONFIG.rounds + ').';
+    $('resumeBox').classList.remove('hidden');
+    $('resumeBtn').addEventListener('click', () => {
+      Object.assign(state, saved);
+      $('resumeBox').classList.add('hidden');
+      openRoundScreen();
+    });
+    $('discardBtn').addEventListener('click', () => {
+      clearSaved();
+      $('resumeBox').classList.add('hidden');
+    });
+  }
+}
+
+function onBuild() {
+  const names = currentParticipantNames();
+  if (names.length < 4) return;
+  const plan = buildSchedule(names.length, CONFIG.rounds);
+  if (!plan) { alert('Could not build a schedule. Try changing the list.'); return; }
+  state.participants = names;
+  state.guestIdx = $('guestOn').checked ? names.length - 1 : -1;
+  state.schedule = plan.rounds;
+  state.repeats = plan.repeats;
+  state.currentRound = 0;
+  state.revealed = new Array(CONFIG.rounds).fill(false);
+  state.featured = plan.rounds.map((groups) => {
+    const g = groups[Math.floor(Math.random() * groups.length)];
+    return { sharer: g.sharer, giver: g.givers[Math.floor(Math.random() * g.givers.length)] };
+  });
+  state.wheelOrder = shuffled(names.map((_, i) => i), Math.random);
+  saveState();
+  showScreen('splash');
+  startFloaters();
+  $('splashFacts').innerHTML = '<span>' + names.length + ' players</span><span>' + CONFIG.rounds + ' rounds</span><span>' + fmtTime(CONFIG.totalSeconds * 1000) + ' each</span>';
+}
+
+/* ================================================================
+   SPLASH SCREEN
+================================================================ */
+function startFloaters() {
+  const box = $('floaters');
+  box.innerHTML = '';
+  const icons = ['👻', '🦇', '🎃', '🕸️', '🧙', '💀', '🕷️', '🌙'];
+  for (let i = 0; i < 22; i += 1) {
+    const s = document.createElement('span');
+    s.className = 'floater';
+    s.textContent = icons[i % icons.length];
+    s.style.left = Math.random() * 96 + '%';
+    s.style.fontSize = (22 + Math.random() * 38) + 'px';
+    s.style.animationDuration = (7 + Math.random() * 9) + 's';
+    s.style.animationDelay = (-Math.random() * 12) + 's';
+    box.appendChild(s);
+  }
+}
+
+/* ================================================================
+   AUDIO (all sounds are synthesized, no files needed)
+================================================================ */
+function ensureAudio() {
+  if (!audioCtx) {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return;
+    audioCtx = new AC();
+    masterGain = audioCtx.createGain();
+    masterGain.gain.value = 0.8;
+    masterGain.connect(audioCtx.destination);
+  }
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+}
+
+function playBell(tolls) {
+  if (muted || !audioCtx) return;
+  const base = 150;
+  const partials = [[0.5, 0.6, 5.5], [1, 1, 4.5], [1.19, 0.55, 3.5], [1.56, 0.3, 2.6], [2, 0.4, 2.8], [2.74, 0.22, 1.8], [3.76, 0.12, 1.2]];
+  for (let t = 0; t < tolls; t += 1) {
+    const t0 = audioCtx.currentTime + 0.05 + t * 1.7;
+    partials.forEach((p) => {
+      const osc = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.value = base * p[0];
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(p[1] * 0.2, t0 + 0.012);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + p[2]);
+      osc.connect(g);
+      g.connect(masterGain);
+      osc.start(t0);
+      osc.stop(t0 + p[2] + 0.1);
+    });
+  }
+}
+
+function playChime() {
+  if (muted || !audioCtx) return;
+  [660, 880, 1320].forEach((f, i) => {
+    const t0 = audioCtx.currentTime + i * 0.14;
+    const osc = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    osc.type = 'triangle';
+    osc.frequency.value = f;
+    g.gain.setValueAtTime(0.0001, t0);
+    g.gain.exponentialRampToValueAtTime(0.25, t0 + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.9);
+    osc.connect(g);
+    g.connect(masterGain);
+    osc.start(t0);
+    osc.stop(t0 + 1);
+  });
+}
+
+function playWoo() {
+  if (muted || !audioCtx) return;
+  const t0 = audioCtx.currentTime;
+  const osc = audioCtx.createOscillator();
+  const lfo = audioCtx.createOscillator();
+  const lfoGain = audioCtx.createGain();
+  const g = audioCtx.createGain();
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(260, t0);
+  osc.frequency.linearRampToValueAtTime(520, t0 + 0.7);
+  osc.frequency.linearRampToValueAtTime(240, t0 + 1.6);
+  lfo.frequency.value = 6;
+  lfoGain.gain.value = 18;
+  lfo.connect(lfoGain);
+  lfoGain.connect(osc.frequency);
+  g.gain.setValueAtTime(0.0001, t0);
+  g.gain.exponentialRampToValueAtTime(0.28, t0 + 0.4);
+  g.gain.exponentialRampToValueAtTime(0.0001, t0 + 1.7);
+  osc.connect(g);
+  g.connect(masterGain);
+  osc.start(t0);
+  lfo.start(t0);
+  osc.stop(t0 + 1.8);
+  lfo.stop(t0 + 1.8);
+}
+
+/* ================================================================
+   WHEELS
+================================================================ */
+const wheels = {
+  sharer: { canvas: null, ctx: null, angle: 0, size: 225 },
+  giver: { canvas: null, ctx: null, angle: 0, size: 225 }
+};
+const WHEEL_COLORS = ['#7b2cbf', '#ff7518', '#4a1570', '#cc5500', '#9d4edd', '#5a3e7a', '#e8871e', '#6a8f12', '#8e24aa', '#ff8c3a', '#2e2440', '#b56fd4'];
+
+function setupWheel(key, canvasId) {
+  const w = wheels[key];
+  w.canvas = $(canvasId);
+  const dpr = window.devicePixelRatio || 1;
+  w.canvas.width = w.size * dpr;
+  w.canvas.height = w.size * dpr;
+  w.canvas.style.width = w.size + 'px';
+  w.canvas.style.height = w.size + 'px';
+  w.ctx = w.canvas.getContext('2d');
+  w.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  w.angle = Math.random() * Math.PI * 2;
+}
+
+function drawWheel(key) {
+  const w = wheels[key];
+  const ctx = w.ctx;
+  const n = state.wheelOrder.length;
+  if (!ctx || !n) return;
+  const cx = w.size / 2;
+  const cy = w.size / 2;
+  const radius = cx - 3;
+  const slice = (2 * Math.PI) / n;
+  ctx.clearRect(0, 0, w.size, w.size);
+  state.wheelOrder.forEach((pIdx, i) => {
+    const a0 = w.angle + i * slice;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, radius, a0, a0 + slice);
+    ctx.closePath();
+    ctx.fillStyle = WHEEL_COLORS[i % WHEEL_COLORS.length];
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(20,8,32,0.45)';
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(a0 + slice / 2);
+    ctx.textAlign = 'right';
+    ctx.fillStyle = '#fff';
+    ctx.shadowColor = 'rgba(0,0,0,0.8)';
+    ctx.shadowBlur = 3;
+    ctx.font = "bold " + (n > 18 ? 11 : 13) + "px 'Baloo 2', sans-serif";
+    let label = nameOf(pIdx) || '';
+    if (label.length > 11) label = label.slice(0, 10) + '…';
+    ctx.fillText(label, radius - 10, 4);
+    ctx.restore();
+  });
+  ctx.beginPath();
+  ctx.arc(cx, cy, 20, 0, 2 * Math.PI);
+  ctx.fillStyle = '#f3ead3';
+  ctx.fill();
+  ctx.strokeStyle = '#241433';
+  ctx.lineWidth = 2.5;
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(cx, cy, 13, 0, 2 * Math.PI);
+  ctx.strokeStyle = '#ff7518';
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+}
+
+function animateWheel(key, targetParticipant, duration) {
+  return new Promise((resolve) => {
+    const w = wheels[key];
+    const n = state.wheelOrder.length;
+    const slice = (2 * Math.PI) / n;
+    const k = Math.max(0, state.wheelOrder.indexOf(targetParticipant));
+    const TWO_PI = 2 * Math.PI;
+    const wanted = -((k + 0.5) * slice);
+    let delta = (((wanted - w.angle) % TWO_PI) + TWO_PI) % TWO_PI;
+    delta += (5 + Math.floor(Math.random() * 3)) * TWO_PI;
+    const start = w.angle;
+    const t0 = performance.now();
+    function frame(now) {
+      const p = Math.min((now - t0) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      w.angle = start + delta * eased;
+      drawWheel(key);
+      if (p < 1) requestAnimationFrame(frame);
+      else resolve();
+    }
+    requestAnimationFrame(frame);
+  });
+}
+
+/* ================================================================
+   ROUND SCREEN
+================================================================ */
+function openRoundScreen() {
+  setupWheel('sharer', 'wheelSharer');
+  setupWheel('giver', 'wheelGiver');
+  $('sharerLabel').textContent = CONFIG.sharer.icon + ' ' + CONFIG.sharer.title;
+  $('giverLabel').textContent = CONFIG.giver.icon + ' ' + CONFIG.giver.title;
+  $('rolesStrip').innerHTML =
+    '<div class="role-card sharer"><div class="role-name">' + CONFIG.sharer.icon + ' ' + esc(CONFIG.sharer.title) + '</div><div class="role-desc">' + esc(CONFIG.sharer.desc) + '</div></div>' +
+    '<div class="role-card giver"><div class="role-name">' + CONFIG.giver.icon + ' ' + esc(CONFIG.giver.title) + '</div><div class="role-desc">' + esc(CONFIG.giver.desc) + '</div></div>';
+  showScreen('round');
+  renderRound();
+}
+
+function renderRound() {
+  const r = state.currentRound;
+  const pills = $('roundPills');
+  pills.innerHTML = '';
+  for (let i = 0; i < CONFIG.rounds; i += 1) {
+    const s = document.createElement('span');
+    s.className = 'pill' + (i === r ? ' current' : (state.revealed[i] && i < r ? ' done' : ''));
+    s.textContent = (i < r ? '✓ ' : '') + 'Round ' + (i + 1);
+    pills.appendChild(s);
+  }
+  const revealed = state.revealed[r];
+  $('spinBtn').textContent = '🎃 SPIN FOR ROUND ' + (r + 1);
+  $('spinBtn').disabled = revealed;
+  $('spinBtn').classList.toggle('hidden', revealed);
+  drawWheel('sharer');
+  drawWheel('giver');
+  if (revealed) {
+    $('resSharer').textContent = nameOf(state.featured[r].sharer);
+    $('resGiver').textContent = nameOf(state.featured[r].giver);
+  } else {
+    $('resSharer').textContent = '?';
+    $('resGiver').textContent = '?';
+  }
+  renderTable(r, false);
+  $('nextBtn').textContent = r >= CONFIG.rounds - 1 ? '📋 Show Summary' : 'Next Round ➜';
+  $('nextBtn').classList.toggle('hidden', !revealed);
+  resetTimer();
+  $('timerStartBtn').disabled = !revealed;
+  $('timerPhase').textContent = revealed ? 'Ready when you are!' : 'Spin first, then start the timer!';
+}
+
+function tagFor(idx) { return idx === state.guestIdx ? '<span class="guest-tag">GUEST</span>' : ''; }
+
+function renderTable(r, animate) {
+  const title = $('tableTitle');
+  const holder = $('matchTable');
+  title.textContent = 'Round ' + (r + 1) + ' Matchups';
+  if (!state.revealed[r] && !animate) {
+    holder.innerHTML = '<div class="placeholder">Spin the wheels to reveal who is partnered with whom!</div>';
+    return;
+  }
+  const groups = state.schedule[r].slice().sort((a, b) => nameOf(a.sharer).localeCompare(nameOf(b.sharer)));
+  let html = '<table class="match-table"><thead><tr><th></th><th class="sharer">' + CONFIG.sharer.icon + ' ' + esc(CONFIG.sharer.title) + '</th><th class="giver">' + CONFIG.giver.icon + ' ' + esc(state.schedule[r].some((g) => g.givers.length > 1) ? CONFIG.giver.plural : CONFIG.giver.title) + '</th></tr></thead><tbody>';
+  groups.forEach((g, i) => {
+    const feat = state.featured[r] && g.sharer === state.featured[r].sharer;
+    const delay = animate ? ' style="animation-delay:' + (i * 0.14) + 's"' : '';
+    html += '<tr class="' + (animate ? 'pop' : '') + (feat ? ' featured' : '') + '"' + delay + '><td>' + (i + 1) + '</td><td>' + esc(nameOf(g.sharer)) + tagFor(g.sharer) + '</td><td>' +
+      g.givers.map((x) => esc(nameOf(x)) + tagFor(x)).join(' + ') + '</td></tr>';
+  });
+  html += '</tbody></table>';
+  holder.innerHTML = html;
+}
+
+async function onSpin() {
+  const r = state.currentRound;
+  if (spinning || state.revealed[r]) return;
+  ensureAudio();
+  spinning = true;
+  $('spinBtn').disabled = true;
+  $('resSharer').textContent = '?';
+  $('resGiver').textContent = '?';
+  $('matchTable').innerHTML = '<div class="placeholder">The wheels are choosing... 👻</div>';
+  playWoo();
+  const feat = state.featured[r];
+  await Promise.all([
+    animateWheel('sharer', feat.sharer, 4200),
+    animateWheel('giver', feat.giver, 5200)
+  ]);
+  $('resSharer').textContent = nameOf(feat.sharer);
+  $('resGiver').textContent = nameOf(feat.giver);
+  state.revealed[r] = true;
+  saveState();
+  playChime();
+  renderTable(r, true);
+  $('spinBtn').classList.add('hidden');
+  $('timerStartBtn').disabled = false;
+  $('timerPhase').textContent = 'Ready when you are!';
+  $('nextBtn').classList.remove('hidden');
+  spinning = false;
+}
+
+/* ================================================================
+   TIMER
+================================================================ */
+const timer = { total: CONFIG.totalSeconds * 1000, remaining: CONFIG.totalSeconds * 1000, endAt: 0, handle: null, status: 'idle', chimed: false };
+
+function fmtTime(ms) {
+  const secs = Math.max(0, Math.ceil(ms / 1000));
+  const m = Math.floor(secs / 60);
+  const s = secs % 60;
+  return m + ':' + (s < 10 ? '0' : '') + s;
+}
+
+function updateTimerUI() {
+  const rem = timer.remaining;
+  const digits = $('timerDigits');
+  digits.textContent = fmtTime(rem);
+  digits.classList.toggle('low', rem > 0 && rem <= 15000);
+  digits.classList.toggle('done', timer.status === 'done');
+  $('timerBar').style.width = (100 * rem / timer.total) + '%';
+  const findMs = CONFIG.findPartnerSeconds * 1000;
+  const phase = $('timerPhase');
+  if (timer.status === 'running' || timer.status === 'paused') {
+    if (rem > timer.total - findMs) phase.textContent = '🏃 Find your partner!';
+    else phase.textContent = CONFIG.sharer.icon + ' Sharing time! ' + CONFIG.sharer.plural + ', show your story!';
+    if (timer.status === 'paused') phase.textContent = '⏸ Paused';
+  } else if (timer.status === 'done') {
+    phase.textContent = '🔔 Time is up! Thank your partner!';
+  } else {
+    phase.textContent = state.revealed[state.currentRound] ? 'Ready when you are!' : 'Spin first, then start the timer!';
+  }
+  $('timerPauseBtn').disabled = !(timer.status === 'running' || timer.status === 'paused');
+  $('timerPauseBtn').textContent = timer.status === 'paused' ? '▶ Resume' : '⏸ Pause';
+  $('timerResetBtn').disabled = timer.status === 'idle';
+  $('timerStartBtn').disabled = !state.revealed[state.currentRound] || timer.status === 'running' || timer.status === 'paused';
+}
+
+function tick() {
+  timer.remaining = Math.max(0, timer.endAt - Date.now());
+  const findMs = CONFIG.findPartnerSeconds * 1000;
+  if (!timer.chimed && findMs > 0 && timer.remaining <= timer.total - findMs) {
+    timer.chimed = true;
+    playChime();
+  }
+  if (timer.remaining <= 0) {
+    clearInterval(timer.handle);
+    timer.handle = null;
+    timer.status = 'done';
+    playBell(CONFIG.bellTolls);
+  }
+  updateTimerUI();
+}
+
+function startTimer() {
+  ensureAudio();
+  clearInterval(timer.handle);
+  timer.remaining = timer.total;
+  timer.endAt = Date.now() + timer.total;
+  timer.status = 'running';
+  timer.chimed = false;
+  timer.handle = setInterval(tick, 200);
+  tick();
+}
+
+function pauseResumeTimer() {
+  if (timer.status === 'running') {
+    clearInterval(timer.handle);
+    timer.handle = null;
+    timer.remaining = Math.max(0, timer.endAt - Date.now());
+    timer.status = 'paused';
+  } else if (timer.status === 'paused') {
+    timer.endAt = Date.now() + timer.remaining;
+    timer.status = 'running';
+    timer.handle = setInterval(tick, 200);
+  }
+  updateTimerUI();
+}
+
+function resetTimer() {
+  clearInterval(timer.handle);
+  timer.handle = null;
+  timer.status = 'idle';
+  timer.remaining = timer.total;
+  timer.chimed = false;
+  updateTimerUI();
+}
+
+function onNext() {
+  const r = state.currentRound;
+  if (timer.status !== 'done') {
+    if (!confirm('The timer has not finished for this round. Move on anyway?')) return;
+  }
+  resetTimer();
+  if (r >= CONFIG.rounds - 1) { openSummary(); return; }
+  state.currentRound = r + 1;
+  saveState();
+  renderRound();
+}
+
+/* ================================================================
+   SUMMARY
+================================================================ */
+let summaryView = 'student';
+
+function groupFor(r, idx) { return state.schedule[r].find((g) => g.members.includes(idx)); }
+
+function cellInfo(r, idx, withEmoji) {
+  if (!state.revealed[r]) return { cls: 'cell-none', text: '(not spun yet)' };
+  const g = groupFor(r, idx);
+  if (g.sharer === idx) {
+    return { cls: 'cell-sharer', text: (withEmoji ? CONFIG.sharer.icon + ' ' : '') + 'Shared with ' + g.givers.map(nameOf).join(' & ') };
+  }
+  const others = g.givers.filter((x) => x !== idx);
+  return { cls: 'cell-giver', text: (withEmoji ? CONFIG.giver.icon + ' ' : '') + 'Gave feedback to ' + nameOf(g.sharer) + (others.length ? ' (with ' + others.map(nameOf).join(' & ') + ')' : '') };
+}
+
+function summaryRows() {
+  const header = ['Student'];
+  for (let r = 0; r < CONFIG.rounds; r += 1) header.push('Round ' + (r + 1));
+  header.push('Times shared', 'Times gave feedback');
+  const rows = state.participants.map((nm, idx) => {
+    const row = [nm + (idx === state.guestIdx ? ' (guest)' : '')];
+    let shared = 0;
+    let gave = 0;
+    for (let r = 0; r < CONFIG.rounds; r += 1) {
+      row.push(cellInfo(r, idx, false).text);
+      if (state.revealed[r]) {
+        if (groupFor(r, idx).sharer === idx) shared += 1; else gave += 1;
+      }
+    }
+    row.push(String(shared), String(gave));
+    return row;
+  });
+  rows.sort((a, b) => a[0].localeCompare(b[0]));
+  return { header, rows };
+}
+
+function openSummary() {
+  showScreen('summary');
+  renderSummary();
+}
+
+function renderSummary() {
+  document.querySelectorAll('.tab').forEach((t) => t.classList.toggle('active', t.dataset.view === summaryView));
+  const body = $('summaryBody');
+  let html = '';
+  if (state.repeats && state.repeats.length) {
+    html += '<div class="warn-box">Heads up: with this class size some partners had to repeat: ' +
+      state.repeats.map((x) => esc(nameOf(x[0])) + ' and ' + esc(nameOf(x[1])) + ' (' + x[2] + 'x)').join('; ') + '.</div>';
+  }
+  if (summaryView === 'student') {
+    html += '<table class="summary-table"><thead><tr>';
+    const header = ['Student'];
+    for (let r = 0; r < CONFIG.rounds; r += 1) header.push('Round ' + (r + 1));
+    header.push('Shared', 'Gave feedback');
+    header.forEach((h) => { html += '<th>' + h + '</th>'; });
+    html += '</tr></thead><tbody>';
+    const order = state.participants.map((nm, idx) => idx).sort((a, b) => nameOf(a).localeCompare(nameOf(b)));
+    order.forEach((idx) => {
+      let shared = 0;
+      let gave = 0;
+      let cells = '';
+      for (let r = 0; r < CONFIG.rounds; r += 1) {
+        const c = cellInfo(r, idx, true);
+        cells += '<td class="' + c.cls + '">' + esc(c.text) + '</td>';
+        if (state.revealed[r]) { if (groupFor(r, idx).sharer === idx) shared += 1; else gave += 1; }
+      }
+      html += '<tr><td class="name">' + esc(nameOf(idx)) + tagFor(idx) + '</td>' + cells + '<td class="num">' + shared + '</td><td class="num">' + gave + '</td></tr>';
+    });
+    html += '</tbody></table>';
+  } else {
+    for (let r = 0; r < CONFIG.rounds; r += 1) {
+      html += '<div class="round-block"><h3>Round ' + (r + 1) + '</h3>';
+      if (!state.revealed[r]) { html += '<div class="placeholder">Not spun yet.</div></div>'; continue; }
+      html += '<table class="summary-table"><thead><tr><th>' + CONFIG.sharer.icon + ' ' + esc(CONFIG.sharer.title) + '</th><th>' + CONFIG.giver.icon + ' ' + esc(CONFIG.giver.plural) + '</th></tr></thead><tbody>';
+      state.schedule[r].slice().sort((a, b) => nameOf(a.sharer).localeCompare(nameOf(b.sharer))).forEach((g) => {
+        html += '<tr><td class="name">' + esc(nameOf(g.sharer)) + tagFor(g.sharer) + '</td><td>' + g.givers.map((x) => esc(nameOf(x)) + tagFor(x)).join(' + ') + '</td></tr>';
+      });
+      html += '</tbody></table></div>';
+    }
+  }
+  body.innerHTML = html;
+}
+
+function buildSummaryTSV() {
+  const d = summaryRows();
+  return [d.header].concat(d.rows).map((row) => row.join('\t')).join('\n');
+}
+function buildSummaryCSV() {
+  const d = summaryRows();
+  const q = (s) => '"' + String(s).replace(/"/g, '""') + '"';
+  return [d.header].concat(d.rows).map((row) => row.map(q).join(',')).join('\n');
+}
+
+function copySummary() {
+  const text = buildSummaryTSV();
+  const done = () => { $('copyStatus').textContent = 'Copied! Paste it into a Google Doc or Sheet.'; };
+  const fallback = () => {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); done(); } catch (e) { $('copyStatus').textContent = 'Could not copy automatically.'; }
+    ta.remove();
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done).catch(fallback);
+  else fallback();
+}
+
+function downloadCSV() {
+  const blob = new Blob([buildSummaryCSV()], { type: 'text/csv;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'spooky-speed-dating-matchups.csv';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1500);
+}
+
+/* ================================================================
+   START OVER + WIRING
+================================================================ */
+function startOver() {
+  if (!confirm('Start over? This clears the current schedule and results.')) return;
+  resetTimer();
+  clearSaved();
+  $('resumeBox').classList.add('hidden');
+  showScreen('roster');
+}
+
+function wire() {
+  $('readyBtn').addEventListener('click', () => { ensureAudio(); playWoo(); openRoundScreen(); });
+  $('spinBtn').addEventListener('click', onSpin);
+  $('timerStartBtn').addEventListener('click', startTimer);
+  $('timerPauseBtn').addEventListener('click', pauseResumeTimer);
+  $('timerResetBtn').addEventListener('click', resetTimer);
+  $('nextBtn').addEventListener('click', onNext);
+  $('muteBtn').addEventListener('click', () => {
+    muted = !muted;
+    $('muteBtn').textContent = muted ? '🔕 Sound off' : '🔔 Sound on';
+  });
+  $('summaryBtn').addEventListener('click', openSummary);
+  $('restartBtn').addEventListener('click', startOver);
+  $('summaryRestartBtn').addEventListener('click', startOver);
+  $('summaryBackBtn').addEventListener('click', () => { showScreen('round'); });
+  $('copyBtn').addEventListener('click', copySummary);
+  $('csvBtn').addEventListener('click', downloadCSV);
+  $('printBtn').addEventListener('click', () => window.print());
+  document.querySelectorAll('.tab').forEach((t) => t.addEventListener('click', () => { summaryView = t.dataset.view; renderSummary(); }));
+}
+
+window.addEventListener('load', () => {
+  wire();
+  initRoster();
+});
+</script>
+</body>
+</html>
